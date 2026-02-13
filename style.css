@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden; /* NO SCROLL */
+    background: linear-gradient(135deg, #e9f2f1, #f5f7fa);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    text-align: center;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: #d9f5ef;
+    color: #008f7a;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Heading */
+h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.3;
+}
+
+h1 span {
+    color: #00a389;
+}
+
+/* Subtitle */
+.subtitle {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Button */
+.cta-btn {
+    margin-top: 30px;
+    padding: 14px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #009688;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #007f73;
+}
+
+/* Platform Logos */
+.platforms {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 30px;
+    color: #555;
+}
+
+.platforms i {
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.platforms i:hover {
+    color: #009688;
+    transform: scale(1.2);
+}
+
+/* Feature Cards */
+.features {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 32%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    text-align: left;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #666;
+}
