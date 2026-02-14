@@ -8,15 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Ensure body can scroll */
+        /* Coordinator page specific styles */
         body {
-            overflow-y: auto;
             height: auto;
             min-height: 100vh;
+            overflow-y: auto;
+            display: block !important;
+            justify-content: unset !important;
+            align-items: unset !important;
         }
+
         .container {
-            padding: 40px 20px;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 40px 60px !important;
+            margin: 0 auto !important;
+            text-align: center !important;
         }
+
+        .coordinator-layout {
+            text-align: left !important;
+        }
+
+        /* Ensure body can scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Modal scroll */
         .modal-content {
             max-height: 90vh;
