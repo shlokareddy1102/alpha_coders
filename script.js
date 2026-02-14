@@ -39,7 +39,7 @@ document.getElementById("startBtn").addEventListener("click", function() {
         <div style="display: flex; gap: 20px; justify-content: center;">
             <button id="coordinatorBtn" style="
                 padding: 16px 32px;
-                background: #4ECDC4;
+                background: #49d6cf;
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -51,7 +51,7 @@ document.getElementById("startBtn").addEventListener("click", function() {
             ">Placement Coordinator</button>
             <button id="recruiterBtn" style="
                 padding: 16px 32px;
-                background: #FF6B6B;
+                background: #ef8496;
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -69,17 +69,21 @@ document.getElementById("startBtn").addEventListener("click", function() {
 
     // Add hover effects
     document.getElementById("coordinatorBtn").addEventListener("mouseover", function() {
-        this.style.background = "#2ba39f";
+        this.style.background = "#8B5CF6";
+        this.style.transform = "scale(1.02)";
     });
     document.getElementById("coordinatorBtn").addEventListener("mouseout", function() {
-        this.style.background = "#4ECDC4";
+        this.style.background = "#3edcd4";
+        this.style.transform = "scale(1)";
     });
 
     document.getElementById("recruiterBtn").addEventListener("mouseover", function() {
-        this.style.background = "#ff5252";
+        this.style.background = "#FF7F7F";
+        this.style.transform = "scale(1.02)";
     });
     document.getElementById("recruiterBtn").addEventListener("mouseout", function() {
-        this.style.background = "#FF6B6B";
+        this.style.background = "#e797a4";
+        this.style.transform = "scale(1)";
     });
 
     // Handle button clicks
