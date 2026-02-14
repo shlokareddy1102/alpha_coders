@@ -24,7 +24,7 @@ from resume_summarizer import (
 
 # Database imports - JUST USE THESE, DON'T REDEFINE!
 from db import (
-    create_student,
+    save_student,
     get_student_by_uuid,
     get_students_by_numeric_ids,
     update_student,
@@ -247,7 +247,7 @@ async def add_student(
         "updated_at": datetime.utcnow()
     }
     
-    create_student(student_document)  # ✅ Using db.py function
+    save_student(student_document)  # ✅ Using db.py function
     print("   ✅ Saved to MongoDB")
     
     # STEP 10: ADD TO FAISS
@@ -466,6 +466,151 @@ async def update_student_endpoint(student_id: str, skills: str = Form(None)):
     
     return {"success": True, "message": "Student updated"}
 
+import pandas as pd
+import io
+import json
+
+@app.post("/bulk-upload")
+async def bulk_upload(file: UploadFile = File(...)):
+
+    if file.filename.endswith(".xlsx"):
+        contents = await file.read()
+        df = pd.read_excel(io.BytesIO(contents))
+        data = df.to_dict(orient="records")
+
+    elif file.filename.endswith(".json"):
+        contents = await file.read()
+        data = json.loads(contents)
+
+    else:
+        return {"error": "Only .xlsx or .json files are supported"}
+
+    inserted_count = 0
+
+    for student in data:
+
+        name = student.get("name")
+        branch = student.get("branch")
+        year = int(student.get("year"))
+        skills = student.get("skills", "")
+        github_username = student.get("github_username")
+        leetcode_username = student.get("leetcode_username")
+
+        manual_skills = [s.strip() for s in skills.split(",")] if skills else []
+
+        # GitHub Fetch
+        github_api_url = f"https://api.github.com/users/{github_username}/repos"
+        response = requests.get(github_api_url)
+
+        if response.status_code != 200:
+            github_data = {"repos": 0, "stars": 0, "primary_languages": []}
+        else:
+            repos_data = response.json()
+            total_repos = len(repos_data)
+            total_stars = 0
+            languages = set()
+
+            for repo in repos_data:
+                total_stars += repo.get("stargazers_count", 0)
+                if repo.get("language"):
+                    languages.add(repo["language"])
+
+            github_data = {
+                "repos": total_repos,
+                "stars": total_stars,
+                "primary_languages": list(languages)
+            }
+
+        # LeetCode Fetch
+        leetcode_stats = fetch_leetcode_stats(leetcode_username)
+
+        if leetcode_stats:
+            leetcode_data = leetcode_stats
+        else:
+            leetcode_data = {"easy": 0, "medium": 0, "hard": 0, "rating": 0}
+
+        # Embedding
+        profile_text = " ".join(manual_skills) + " " + " ".join(github_data["primary_languages"])
+        embedding = model.encode([profile_text])[0].tolist()
+
+        student_document = {
+            "name": name,
+            "branch": branch,
+            "year": year,
+            "skills": manual_skills,
+            "github": github_data,
+            "leetcode": leetcode_data,
+            "professional": {"internships": 0, "certifications": 0},
+            "embedding": embedding,
+            "source": "bulk"
+        }
+
+        students_collection.insert_one(student_document)
+        inserted_count += 1
+
+    return {"message": f"{inserted_count} students uploaded successfully"}
+@app.post("/upload-documents/{student_name}")
+async def upload_documents(
+    student_name: str,
+    linkedin_pdf: UploadFile = File(...),
+    resume_pdf: UploadFile = File(...)
+):
+
+    student = students_collection.find_one({"name": student_name})
+
+    if not student:
+        return {"error": "Student not found"}
+
+    # -------- Extract LinkedIn Text --------
+    linkedin_text = ""
+    try:
+        with pdfplumber.open(linkedin_pdf.file) as pdf:
+            for page in pdf.pages:
+                linkedin_text += page.extract_text() or ""
+    except:
+        linkedin_text = ""
+
+    # -------- Extract Resume Text --------
+    resume_text = ""
+    try:
+        with pdfplumber.open(resume_pdf.file) as pdf:
+            for page in pdf.pages:
+                resume_text += page.extract_text() or ""
+    except:
+        resume_text = ""
+
+    tech_keywords = [
+        "python", "java", "react", "machine learning",
+        "docker", "aws", "sql", "node", "fastapi",
+        "tensorflow", "mongodb", "kubernetes",
+        "c++", "javascript", "html", "css"
+    ]
+
+    combined_text = (linkedin_text + " " + resume_text).lower()
+
+    extracted_skills = [
+        keyword for keyword in tech_keywords
+        if keyword in combined_text
+    ]
+
+    updated_skills = list(set(student["skills"] + extracted_skills))
+
+    # Regenerate embedding
+    profile_text = " ".join(updated_skills) + " " + " ".join(student["github"]["primary_languages"])
+    new_embedding = model.encode([profile_text])[0].tolist()
+
+    students_collection.update_one(
+        {"name": student_name},
+        {
+            "$set": {
+                "skills": updated_skills,
+                "embedding": new_embedding,
+                "has_documents": True
+            }
+        }
+    )
+
+    return {"message": "Documents uploaded and profile enriched successfully"}
 
 # =====================================================
 # DELETE STUDENT
