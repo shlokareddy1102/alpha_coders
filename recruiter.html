@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillMatch AI - Recruiter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="badge">🔍 AI Candidate Ranking</div>
+        <h1>Find Your <span>Perfect Match</span></h1>
+        <p class="subtitle">Paste a job description and let our AI find the most suitable candidates based on GitHub, LeetCode, and LinkedIn activity.</p>
+
+        <div class="job-form-container">
+            <div class="form-header">
+                <h2>Job Description</h2>
+                <button class="sample-btn" id="sampleBtn">📋 Use Sample</button>
+            </div>
+            <textarea id="jobDesc" placeholder="e.g., Looking for a FastAPI developer with MongoDB experience..."></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <input type="number" id="topK" value="10" min="1" max="100" style="width: 80px; padding: 8px;">
+                <button class="submit-btn" id="rankBtn">Find Candidates <i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+
+        <div id="results">
+            <!-- Candidates will be injected here -->
+        </div>
+    </div>
+
+    <script src="js/recruiter.js"></script>
+</body>
+</html>
