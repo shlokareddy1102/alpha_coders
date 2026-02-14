@@ -160,3 +160,101 @@ Nice to have:
     }
 
 });
+
+// ================= DISPLAY RANKED CANDIDATES =================
+
+function displayRankedCandidates(candidates) {
+    const modal = document.createElement("div");
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 20px;
+    `;
+
+    const content = document.createElement("div");
+    content.style.cssText = `
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        max-width: 1000px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    `;
+
+    function getVerdictColor(verdict) {
+        if (verdict.includes('Strong')) return '#10B981';
+        if (verdict.includes('Moderate')) return '#F59E0B';
+        return '#EF4444';
+    }
+
+    let html = `
+        <h2 style="margin-bottom: 20px;">🏆 Ranked Candidates</h2>
+        <div style="display: grid; gap: 20px;">
+    `;
+
+    if (!candidates || candidates.length === 0) {
+        html += '<p>No candidates found.</p>';
+    } else {
+        candidates.forEach((c, index) => {
+            const md = c.match_details || {}; // fallback if missing
+            html += `
+                <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #F9FAFB;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0;">${index + 1}. ${c.name}</h3>
+                        <span style="background: #4ECDC4; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 600;">Score: ${c.final_score}</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #6B7280;">${c.branch} · Year ${c.year}</p>
+                    
+                    <!-- Structured match details -->
+                    <div style="margin: 15px 0;">
+                        <span style="background: ${getVerdictColor(md.verdict)}; padding: 6px 16px; border-radius: 20px; color: white; font-weight: 600; display: inline-block; margin-bottom: 12px;">
+                            ${md.verdict || 'N/A'}
+                        </span>
+                        <p><strong>Fit Summary:</strong> ${md.fit_summary || 'No summary'}</p>
+                        <p><strong>Technical Alignment:</strong> ${md.technical_alignment || 'N/A'}</p>
+                        <p><strong>DSA Strength:</strong> ${md.dsa_strength || 'N/A'}</p>
+                        <p><strong>Gaps:</strong> ${md.gaps || 'None identified'}</p>
+                    </div>
+
+                    <p><strong>Skills:</strong> ${c.skills.join(', ')}</p>
+                    
+                    <div style="margin: 10px 0;">
+                        <details>
+                            <summary style="cursor: pointer; color: #4ECDC4;">GitHub Stats</summary>
+                            <p>Repos: ${c.github_stats.repos} · Stars: ${c.github_stats.stars}<br>Languages: ${c.github_stats.languages.join(', ')}</p>
+                        </details>
+                        <details>
+                            <summary style="cursor: pointer; color: #4ECDC4;">LeetCode Stats</summary>
+                            <p>Solved: ${c.leetcode_stats.total} (E:${c.leetcode_stats.easy} M:${c.leetcode_stats.medium} H:${c.leetcode_stats.hard})<br>Rating: ${c.leetcode_stats.contest_rating}</p>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <a href="${c.github_profile}" target="_blank" style="background: #333; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">GitHub</a>
+                        <a href="${c.leetcode_profile}" target="_blank" style="background: #FFA116; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">LeetCode</a>
+                        <a href="http://localhost:8000${c.resume_url}" target="_blank" style="background: #4ECDC4; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">Resume</a>
+                        <a href="http://localhost:8000${c.linkedin_url}" target="_blank" style="background: #0077B5; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">LinkedIn</a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    html += `</div><button id="closeRankModal" style="margin-top: 20px; padding: 10px 20px; background: #E5E7EB; border: none; border-radius: 6px; cursor: pointer;">Close</button>`;
+    content.innerHTML = html;
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+
+    document.getElementById("closeRankModal").addEventListener("click", () => modal.remove());
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.remove(); });
+}
