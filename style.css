@@ -145,6 +145,55 @@ h1 span {
     margin: 40px 0;
 }
 
+/* Two Column Layout for Coordinator */
+.coordinator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+    align-items: start;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 2px solid #E5E7EB;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #4ECDC4;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .coordinator-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
 .option-card {
     background: white;
     padding: 32px;
