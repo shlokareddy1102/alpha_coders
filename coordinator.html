@@ -1,147 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>SkillMatch AI - Coordinator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+
     <style>
-        /* Coordinator page specific styles */
         body {
-            height: auto;
             min-height: 100vh;
             overflow-y: auto;
-            display: block !important;
-            justify-content: unset !important;
-            align-items: unset !important;
+            font-family: "Inter", sans-serif;
         }
 
         .container {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding: 40px 60px !important;
-            margin: 0 auto !important;
-            text-align: center !important;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+            text-align: center;
         }
 
         .coordinator-layout {
-            text-align: left !important;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 30px;
+            text-align: left;
         }
 
-        /* Ensure body can scroll */
-        html {
-            scroll-behavior: smooth;
+        @media (max-width: 900px) {
+            .coordinator-layout {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* Modal scroll */
         .modal-content {
             max-height: 90vh;
             overflow-y: auto;
         }
     </style>
 </head>
+
 <body>
+
     <div class="container">
+
+        <!-- Back Button -->
         <a href="index.html" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i> Back to Home
         </a>
 
+        <!-- Header -->
         <div class="badge">📊 Placement Coordinator Dashboard</div>
         <h1>Manage <span>Student Data</span></h1>
-        <p class="subtitle">Add, update, or remove students. Monitor system health and external data sources.</p>
+        <p class="subtitle">
+            Add, update, or remove students. Monitor system health and external data sources.
+        </p>
 
-        <!-- Stats Cards -->
-        <div class="stats-dashboard">
+        <!-- Stats -->
+        <section class="stats-dashboard">
             <h2>System Statistics</h2>
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-card"><div class="stat-number" id="totalStudents">-</div><div class="stat-label">Total Students</div></div>
-                <div class="stat-card"><div class="stat-number" id="faissVectors">-</div><div class="stat-label">FAISS Vectors</div></div>
-                <div class="stat-card"><div class="stat-number" id="totalFiles">-</div><div class="stat-label">PDF Files</div></div>
-            </div>
-        </div>
 
-        <!-- Two Column Layout -->
+            <div class="stats-grid" id="statsGrid">
+
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStudents">-</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" id="faissVectors">-</div>
+                    <div class="stat-label">FAISS Vectors</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFiles">-</div>
+                    <div class="stat-label">PDF Files</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Main Layout -->
         <div class="coordinator-layout">
-            <!-- Left Column: Add Student & Refresh Blocks -->
-            <div class="left-column">
-                <div class="option-card" id="addStudentCard">
-                    <div class="icon-wrapper"><i class="fa-solid fa-user-plus"></i></div>
+
+            <!-- LEFT COLUMN -->
+            <div>
+
+                <!-- Add Student -->
+                <div class="option-card">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+
                     <h3>Add New Student</h3>
                     <p>Register a student with resume, LinkedIn PDF, and platform usernames.</p>
-                    <button class="option-btn" id="addStudentBtn">+ Add Student</button>
+
+                    <button type="button" class="option-btn" id="addStudentBtn">
+                        + Add Student
+                    </button>
                 </div>
 
-                <div class="option-card" id="refreshDataCard">
-                    <div class="icon-wrapper"><i class="fa-solid fa-rotate"></i></div>
+                <!-- Refresh -->
+                <div class="option-card">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-rotate"></i>
+                    </div>
+
                     <h3>Refresh All Students</h3>
-                    <p>Re-fetch GitHub/LeetCode data for all students (background).</p>
-                    <button class="option-btn" id="refreshBtn">Refresh Now</button>
+                    <p>Re-fetch GitHub/LeetCode data for all students.</p>
+
+                    <button type="button" class="option-btn" id="refreshBtn">
+                        Refresh Now
+                    </button>
                 </div>
+
             </div>
 
-            <!-- Right Column: Search & Student List -->
-            <div class="right-column">
-                <h2 style="text-align: left; margin-bottom: 16px;">Search Students</h2>
+            <!-- RIGHT COLUMN -->
+            <div>
+
+                <h2>Search Students</h2>
 
                 <div class="search-bar">
                     <input type="text" id="searchInput" placeholder="Search by name..." />
-                    <button id="searchBtn">Search</button>
-                    <button id="clearSearchBtn" style="background: #6B7280;">Clear</button>
+
+                    <button type="button" id="searchBtn">Search</button>
+
+                    <button type="button" id="clearSearchBtn" style="background:#6B7280;">
+                        Clear
+                    </button>
                 </div>
 
                 <div id="studentList"></div>
+
             </div>
+
         </div>
 
     </div>
 
-    <!-- Add Student Modal -->
-    <div id="addModal" class="modal-overlay" style="display: none;">
+    <!-- ================= ADD STUDENT MODAL ================= -->
+    <div id="addModal" class="modal-overlay" hidden>
+
         <div class="modal-content">
+
             <div class="modal-header">
                 <h2>Add New Student</h2>
-                <button class="close-btn" id="closeModal">&times;</button>
+                <button type="button" class="close-btn" id="closeModal">&times;</button>
             </div>
+
             <form id="addStudentForm" enctype="multipart/form-data">
+
                 <div class="form-grid">
-                    <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
-                    <div class="form-group"><label>Branch</label><input type="text" name="branch" required></div>
-                    <div class="form-group"><label>Year</label><input type="number" name="year" required></div>
-                    <div class="form-group"><label>Skills (comma separated)</label><input type="text" name="skills" required></div>
-                    <div class="form-group"><label>GitHub Username</label><input type="text" name="github_username" required></div>
-                    <div class="form-group"><label>LeetCode Username</label><input type="text" name="leetcode_username" required></div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Branch</label>
+                        <input type="text" name="branch" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="number" name="year" min="1" max="5" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skills (comma separated)</label>
+                        <input type="text" name="skills" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>GitHub Username</label>
+                        <input type="text" name="github_username" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>LeetCode Username</label>
+                        <input type="text" name="leetcode_username" required />
+                    </div>
+
                 </div>
-                <div class="form-group"><label>Resume PDF</label><input type="file" name="resume_pdf" accept=".pdf" required></div>
-                <div class="form-group"><label>LinkedIn PDF</label><input type="file" name="linkedin_pdf" accept=".pdf" required></div>
-                <button type="submit" class="submit-btn" style="margin-top: 20px;">Register Student</button>
+
+                <div class="form-group">
+                    <label>Resume PDF</label>
+                    <input type="file" name="resume_pdf" accept="application/pdf" required />
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn PDF</label>
+                    <input type="file" name="linkedin_pdf" accept="application/pdf" required />
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Register Student
+                </button>
+
             </form>
-            <div id="formMessage" style="margin-top: 10px;"></div>
+
+            <div id="formMessage"></div>
+
         </div>
+
     </div>
 
-    <!-- Edit Student Modal -->
-    <div id="editModal" class="modal-overlay" style="display: none;">
+    <!-- ================= EDIT STUDENT MODAL ================= -->
+    <div id="editModal" class="modal-overlay" hidden>
+
         <div class="modal-content">
+
             <div class="modal-header">
                 <h2>Edit Student</h2>
-                <button class="close-btn" id="closeEditModal">&times;</button>
+                <button type="button" class="close-btn" id="closeEditModal">&times;</button>
             </div>
+
             <form id="editStudentForm">
-                <input type="hidden" id="editStudentId" name="student_id">
-                <div class="form-group"><label>Name</label><input type="text" id="editName" disabled style="background:#f3f4f6;"></div>
-                <div class="form-group"><label>Branch</label><input type="text" id="editBranch" disabled style="background:#f3f4f6;"></div>
-                <div class="form-group"><label>Year</label><input type="number" id="editYear" disabled style="background:#f3f4f6;"></div>
-                <div class="form-group"><label>Skills (comma separated)</label><input type="text" id="editSkills" required></div>
-                <div class="form-group"><label>GitHub Username</label><input type="text" id="editGithub" disabled style="background:#f3f4f6;"></div>
-                <div class="form-group"><label>LeetCode Username</label><input type="text" id="editLeetcode" disabled style="background:#f3f4f6;"></div>
-                <button type="submit" class="submit-btn">Update Student</button>
+
+                <input type="hidden" id="editStudentId" name="student_id" />
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="editName" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input type="text" id="editBranch" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="number" id="editYear" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Skills</label>
+                    <input type="text" id="editSkills" required />
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub Username</label>
+                    <input type="text" id="editGithub" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>LeetCode Username</label>
+                    <input type="text" id="editLeetcode" disabled />
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Update Student
+                </button>
+
             </form>
-            <div id="editMessage" style="margin-top: 10px;"></div>
+
+            <div id="editMessage"></div>
+
         </div>
+
     </div>
 
+    <!-- JS -->
     <script src="js/coordinator.js"></script>
+
 </body>
+
 </html>
