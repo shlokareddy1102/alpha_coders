@@ -92,8 +92,8 @@ Ranking & Scoring Module
 
 ### Backend  
 - Python  
-- Scikit-learn  
-- NLP (TF-IDF / Vector Embeddings)  
+- FastAPI
+- Vector Embeddings
 - REST APIs  
 
 ### Frontend  
@@ -151,20 +151,10 @@ Each platform contributes differently based on recruiter-defined importance.
 
 ---
 
-## 🚀 Why Alpha Coders Stands Out  
-
-- Uses real-world technical signals instead of resume-only evaluation  
-- Embedding-based semantic understanding (not just keyword matching)  
-- Transparent and explainable ranking mechanism  
-- Scalable architecture  
-- Hackathon-ready with production-level expansion potential  
-
----
-
 ## 👥 Team Alpha Coders  
 
 - Siddhi Sritha Shetkar – Team Lead | Frontend & UI  
-- Ailapuram Sai Shloka Reddy – Backend & Database Systems  
+- Ailapuram SaiShloka Reddy – Backend & Database Systems  
 - Sanjana Donthireddy – AI & Matching Engine  
 
 ---
@@ -178,4 +168,3 @@ Each platform contributes differently based on recruiter-defined importance.
 - Bias detection & fairness auditing module  
 - Real-time recruiter feedback learning loop  
 
----
