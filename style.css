@@ -170,20 +170,45 @@ h1 span {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    align-items: center;
 }
 
 .search-bar input {
     flex: 1;
-    padding: 10px 16px;
+    padding: 12px 16px;
     border-radius: 8px;
     border: 2px solid #E5E7EB;
     font-size: 14px;
     transition: border-color 0.3s;
+    height: 44px;
+    box-sizing: border-box;
 }
 
 .search-bar input:focus {
     outline: none;
     border-color: #4ECDC4;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background: #4ECDC4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    height: 44px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.search-bar button:hover {
+    background: #2ba39f;
+}
+
+.search-bar button[style*="background: #6B7280"]:hover {
+    background: #4B5563 !important;
 }
 
 /* Responsive Design */
