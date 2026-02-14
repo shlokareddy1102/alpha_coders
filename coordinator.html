@@ -44,35 +44,38 @@
             </div>
         </div>
 
-        <!-- Action Cards -->
-        <div class="upload-options">
-            <div class="option-card" id="addStudentCard">
-                <div class="icon-wrapper"><i class="fa-solid fa-user-plus"></i></div>
-                <h3>Add New Student</h3>
-                <p>Register a student with resume, LinkedIn PDF, and platform usernames.</p>
-                <button class="option-btn" id="addStudentBtn">+ Add Student</button>
+        <!-- Two Column Layout -->
+        <div class="coordinator-layout">
+            <!-- Left Column: Add Student & Refresh Blocks -->
+            <div class="left-column">
+                <div class="option-card" id="addStudentCard">
+                    <div class="icon-wrapper"><i class="fa-solid fa-user-plus"></i></div>
+                    <h3>Add New Student</h3>
+                    <p>Register a student with resume, LinkedIn PDF, and platform usernames.</p>
+                    <button class="option-btn" id="addStudentBtn">+ Add Student</button>
+                </div>
+
+                <div class="option-card" id="refreshDataCard">
+                    <div class="icon-wrapper"><i class="fa-solid fa-rotate"></i></div>
+                    <h3>Refresh All Students</h3>
+                    <p>Re-fetch GitHub/LeetCode data for all students (background).</p>
+                    <button class="option-btn" id="refreshBtn">Refresh Now</button>
+                </div>
             </div>
-            <div class="option-card" id="refreshDataCard">
-                <div class="icon-wrapper"><i class="fa-solid fa-rotate"></i></div>
-                <h3>Refresh All Data</h3>
-                <p>Re-fetch GitHub/LeetCode data for all students (background).</p>
-                <button class="option-btn" id="refreshBtn">Refresh Now</button>
+
+            <!-- Right Column: Search & Student List -->
+            <div class="right-column">
+                <h2 style="text-align: left; margin-bottom: 16px;">Search Students</h2>
+
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search by name..." />
+                    <button id="searchBtn" class="option-btn">Search</button>
+                    <button id="clearSearchBtn" class="option-btn" style="background:#6B7280;">Clear</button>
+                </div>
+
+                <div id="studentList"></div>
             </div>
         </div>
-
-        <!-- Student List -->
-        <div style="margin-top: 40px;">
-         <h2>Search Students</h2>
-
-         <div style="display:flex; gap:10px; margin-bottom:20px;">
-          <input type="text" id="searchInput" placeholder="Search by name..." 
-            style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;">
-          <button id="searchBtn" class="option-btn">Search</button>
-          <button id="clearSearchBtn" class="option-btn" style="background:#6B7280;">Clear</button>
-    </div>
-
-    <div id="studentList"></div>
-</div>
 
     </div>
 
