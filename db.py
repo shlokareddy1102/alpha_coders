@@ -6,77 +6,78 @@ import os
 # MongoDB Connection
 # ----------------------------
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
-DB_NAME = "campus_placement"
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017/")
+DB_NAME = "alpha_coders"
 COLLECTION_NAME = "students"
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 students_collection = db[COLLECTION_NAME]
 
-# Ensure unique index on student_id
-students_collection.create_index("student_id", unique=True)
+
+# ----------------------------
+# ID COUNTER
+# ----------------------------
+
+def get_next_numeric_id():
+    counter = db["counters"].find_one_and_update(
+        {"_id": "student_id"},
+        {"$inc": {"seq": 1}},
+        upsert=True,
+        return_document=True
+    )
+    return counter["seq"]
 
 
 # ----------------------------
-# SAVE OR UPDATE STUDENT
+# CREATE STUDENT
 # ----------------------------
-def save_student(student_id, summary, embedding):
-    """
-    Insert or update student.
-    Embedding must already be a Python list.
-    """
 
-    document = {
-        "student_id": student_id,
-        "ai_processed": {
-            "summary": summary,
-            "embedding": embedding
-        },
-        "updated_at": datetime.utcnow()
-    }
+def create_student(student_document):
+    students_collection.insert_one(student_document)
 
-    students_collection.update_one(
-        {"student_id": student_id},
-        {
-            "$set": document,
-            "$setOnInsert": {"created_at": datetime.utcnow()}
-        },
-        upsert=True
+
+# ----------------------------
+# GET STUDENT BY UUID
+# ----------------------------
+
+def get_student_by_uuid(student_id):
+    return students_collection.find_one({"student_id": student_id})
+
+
+# ----------------------------
+# GET STUDENTS BY NUMERIC IDS
+# ----------------------------
+
+def get_students_by_numeric_ids(numeric_ids):
+    return list(
+        students_collection.find({"numeric_id": {"$in": numeric_ids}})
     )
 
 
 # ----------------------------
-# REMOVE STUDENT
+# UPDATE STUDENT
 # ----------------------------
-def remove_student(student_id):
+
+def update_student(student_id, update_data):
+    students_collection.update_one(
+        {"student_id": student_id},
+        {"$set": update_data}
+    )
+
+
+# ----------------------------
+# DELETE STUDENT
+# ----------------------------
+
+def delete_student(student_id):
     students_collection.delete_one({"student_id": student_id})
 
 
 # ----------------------------
-# GET ALL STUDENTS (FOR REBUILD)
+# GET ALL STUDENTS (FOR FAISS REBUILD)
 # ----------------------------
+
 def get_all_students():
-    """
-    Returns list of dicts:
-    [
-        {"id": 101, "embedding": [...]},
-        ...
-    ]
-    """
+    return list(students_collection.find())
 
-    students = students_collection.find(
-        {},
-        {"student_id": 1, "ai_processed.embedding": 1}
-    )
-
-    result = []
-
-    for student in students:
-        if "ai_processed" in student and "embedding" in student["ai_processed"]:
-            result.append({
-                "id": student["student_id"],
-                "embedding": student["ai_processed"]["embedding"]
-            })
-
-    return result
