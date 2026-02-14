@@ -133,6 +133,28 @@ Final Score =
 Each platform contributes differently based on recruiter-defined importance.
 
 ---
+## Data Ingestion Options
+
+### 1. Individual Upload
+Placement coordinator can upload:
+- GitHub username
+- LeetCode username
+- LinkedIn PDF
+- Resume PDF
+
+System extracts structured + unstructured skills.
+
+### 2. Bulk Upload
+Placement coordinator can upload:
+- Excel (.xlsx)
+- JSON (.json)
+
+Containing:
+name, branch, year, skills, github_username, leetcode_username
+
+Bulk upload uses structured data only.
+Document enrichment can be performed individually.
+---
 
 ## 🔍 Example Use Case  
 
