@@ -2,6 +2,12 @@ document.getElementById("startBtn").addEventListener("click", function() {
 
     console.log("Frontend ready to connect to backend...");
 
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById("roleModal");
+    if (existingModal) {
+        existingModal.remove();
+    }
+
     // Create modal for user role selection
     const modal = document.createElement("div");
     modal.id = "roleModal";
@@ -21,37 +27,39 @@ document.getElementById("startBtn").addEventListener("click", function() {
     const modalContent = document.createElement("div");
     modalContent.style.cssText = `
         background: white;
-        padding: 40px;
-        border-radius: 12px;
+        padding: 60px 50px;
+        border-radius: 16px;
         text-align: center;
-        max-width: 400px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        max-width: 600px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     `;
 
     modalContent.innerHTML = `
-        <h2 style="margin-bottom: 30px; color: #333;">Select Your Role</h2>
-        <div style="display: flex; gap: 15px; justify-content: center;">
+        <h2 style="margin-bottom: 40px; color: #333; font-size: 28px; font-weight: 700;">Select Your Role</h2>
+        <div style="display: flex; gap: 20px; justify-content: center;">
             <button id="coordinatorBtn" style="
-                padding: 12px 24px;
-                background: #4F46E5;
+                padding: 16px 32px;
+                background: #4ECDC4;
                 color: white;
                 border: none;
-                border-radius: 6px;
+                border-radius: 8px;
                 cursor: pointer;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 600;
-                transition: background 0.3s;
+                transition: all 0.3s;
+                flex: 1;
             ">Placement Coordinator</button>
             <button id="recruiterBtn" style="
-                padding: 12px 24px;
-                background: #10B981;
+                padding: 16px 32px;
+                background: #FF6B6B;
                 color: white;
                 border: none;
-                border-radius: 6px;
+                border-radius: 8px;
                 cursor: pointer;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 600;
-                transition: background 0.3s;
+                transition: all 0.3s;
+                flex: 1;
             ">Recruiter</button>
         </div>
     `;
@@ -61,24 +69,24 @@ document.getElementById("startBtn").addEventListener("click", function() {
 
     // Add hover effects
     document.getElementById("coordinatorBtn").addEventListener("mouseover", function() {
-        this.style.background = "#4338CA";
+        this.style.background = "#2ba39f";
     });
     document.getElementById("coordinatorBtn").addEventListener("mouseout", function() {
-        this.style.background = "#4F46E5";
+        this.style.background = "#4ECDC4";
     });
 
     document.getElementById("recruiterBtn").addEventListener("mouseover", function() {
-        this.style.background = "#059669";
+        this.style.background = "#ff5252";
     });
     document.getElementById("recruiterBtn").addEventListener("mouseout", function() {
-        this.style.background = "#10B981";
+        this.style.background = "#FF6B6B";
     });
 
     // Handle button clicks
     document.getElementById("coordinatorBtn").addEventListener("click", function() {
         console.log("Placement Coordinator selected");
         modal.remove();
-        // Add further logic here
+        window.location.href = 'coordinator.html';
     });
 
     document.getElementById("recruiterBtn").addEventListener("click", function() {
@@ -98,6 +106,12 @@ document.getElementById("startBtn").addEventListener("click", function() {
 
 // Function to show job description form
 function showJobDescriptionForm() {
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById("jobDescriptionModal");
+    if (existingModal) {
+        existingModal.remove();
+    }
+
     const formModal = document.createElement("div");
     formModal.id = "jobDescriptionModal";
     formModal.style.cssText = `
@@ -340,6 +354,12 @@ function extractSkillsLocal(jobDescription, submitBtn, formModal) {
 
 function displayExtractedSkills(data, formModal) {
     formModal.remove();
+
+    // Remove existing skills modal if it exists
+    const existingSkillsModal = document.getElementById("skillsModal");
+    if (existingSkillsModal) {
+        existingSkillsModal.remove();
+    }
     
     const skillsModal = document.createElement("div");
     skillsModal.id = "skillsModal";
