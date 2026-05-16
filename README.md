@@ -1,10 +1,10 @@
-# 🚀 Alpha Coders  
+# Skillsync.ai
 ## AI-Powered Intelligent Candidate Ranking System  
 **Built for SUDHEE 2026 – CBIT Hackathon**
 
 ---
 
-## 📌 Overview  
+## Overview  
 
 **Alpha Coders** is an AI-driven candidate evaluation platform that ranks students based on real technical signals extracted from:
 
@@ -17,7 +17,7 @@ Instead of relying solely on static resumes, the system uses **Natural Language 
 
 ---
 
-## ❗ Problem Statement  
+## Problem Statement  
 
 Modern hiring pipelines face several challenges:
 
@@ -31,7 +31,7 @@ As a result, strong candidates are often overlooked due to weak keyword alignmen
 
 ---
 
-## 💡 Our Solution  
+## Our Solution  
 
 Alpha Coders introduces an intelligent ranking engine that:
 
@@ -44,7 +44,7 @@ Alpha Coders introduces an intelligent ranking engine that:
 
 ---
 
-## 🧠 How It Works  
+## How It Works  
 
 ### Step 1 – Data Input  
 - Candidate database (LeetCode, GitHub, LinkedIn, Resume)  
@@ -72,7 +72,7 @@ Alpha Coders introduces an intelligent ranking engine that:
 
 ---
 
-## 🏗️ System Architecture  
+## System Architecture  
 
 ```text
 Frontend (HTML, CSS, JavaScript)
@@ -88,7 +88,7 @@ Ranking & Scoring Module
 
 ---
 
-## ⚙️ Tech Stack  
+## Tech Stack  
 
 ### Backend  
 - Python  
@@ -107,7 +107,7 @@ Ranking & Scoring Module
 
 ---
 
-## 🎯 Core Features  
+## Core Features  
 
 - Multi-platform skill aggregation  
 - Embedding-based semantic matching  
@@ -119,7 +119,7 @@ Ranking & Scoring Module
 
 ---
 
-## 📊 Scoring Logic  
+## Scoring Logic  
 
 ```
 Final Score =
@@ -156,7 +156,7 @@ Bulk upload uses structured data only.
 Document enrichment can be performed individually.
 ---
 
-## 🔍 Example Use Case  
+## Example Use Case  
 
 **Recruiter Input:**
 
@@ -173,7 +173,7 @@ Document enrichment can be performed individually.
 
 ---
 
-## 👥 Team Alpha Coders  
+## Team Alpha Coders  
 
 - Siddhi Sritha Shetkar – Team Lead | Frontend & UI  
 - Ailapuram SaiShloka Reddy – Backend & Database Systems  
@@ -181,7 +181,7 @@ Document enrichment can be performed individually.
 
 ---
 
-## 🔮 Future Improvements  
+## Future Improvements  
 
 - Live API integration with GitHub & LeetCode  
 - LLM-powered skill inference  
